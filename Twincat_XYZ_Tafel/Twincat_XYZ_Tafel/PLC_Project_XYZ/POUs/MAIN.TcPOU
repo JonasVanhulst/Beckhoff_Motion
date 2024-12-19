@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{bbc69c0b-e531-4931-84b2-d188ceecb4a1}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+
+    // input
+    ExecuteABS        : BOOL;
+    Enable          : BOOL := TRUE;
+    Enable_Positive : BOOL := TRUE;
+    Enable_Negative : BOOL := TRUE;
+    Override        : LREAL := 100.0;
+    BufferMode      : MC_BufferMode;
+    Options         : ST_PowerOptions;
+    BTN_RIGHT       AT %I* : BOOL := FALSE;
+    BTN_LEFT        AT %I* : BOOL := FALSE;
+
+    SWY1  AT %I* : BOOL;
+    SWY2  AT %I* : BOOL;
+    SWX1  AT %I* : BOOL;
+    SWX2  AT %I* : BOOL;
+
+    // output
+    Status  : BOOL;
+    Busy    : BOOL;
+    Active  : BOOL;
+    Error   : BOOL;
+    ErrorID : UDINT;
+
+
+
+
+
+
+
+    Axis_x : AXIS_REF;
+	
+	Axis_y1 : AXIS_REF;
+	Axis_y2 : AXIS_REF;
+
+    mc_power : MC_Power;
+
+
+    fbMoveAbs1: MC_MoveAbsolute;
+    fbMoveAbs2: MC_MoveAbsolute;
+	
+
+	Axis_x_Halt: MC_Halt;
+	Halt_X1: MC_Halt;
+	Halt_X2: MC_Halt;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[mc_power.Enable := Enable;
+
+
+mc_power.Enable_Positive := Enable_Positive;
+mc_power.Enable_Negative := Enable_Negative;
+mc_power.Override := Override;
+
+//mc_power.BufferMode :=  MC_Buffered;
+mc_power(Axis := Axis_x );
+
+//mc_power.Axis.PlcToNc.ExtSetVelo := 100;
+//mc_power.Axis.PlcToNc.ExtSetPos := 1000000;
+
+
+ExecuteABS := BTN_LEFT;
+fbMoveAbs1(
+    Axis        := Axis_x, 
+    Execute     := BTN_LEFT, 
+    Position    := 3000, 
+    Velocity    := 50, 
+
+    );
+	
+fbMoveAbs2(
+    Axis        := Axis_x, 
+    Execute     := BTN_RIGHT, 
+    Position    := -3000, 
+    Velocity    := 50, 
+
+    );
+Halt_X1(
+	Axis:= Axis_x, 
+	Execute:= SWX1, 
+	 );
+	 
+Halt_X2(
+	Axis:= Axis_x, 
+	Execute:= SWX2, 
+	 );
+	 
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="93" Count="20" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="144" Count="0" />
+      <LineId Id="146" Count="5" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="132" Count="2" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="154" Count="0" />
+      <LineId Id="157" Count="2" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="115" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
