@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <GVL Name="GVL" Id="{35e23919-0452-492b-b861-dd88e028caf2}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	//Leds
+	bLed_Rd1 AT %Q* : BOOL;
+	bLed_Rd2 AT %Q* : BOOL;
+	bLed_Rd3 AT %Q* : BOOL;
+	bLed_Rd4 AT %Q* : BOOL;
+	
+	bLed_Gn1 AT %Q* : BOOL;
+	bLed_Gn2 AT %Q* : BOOL;
+	bLed_Gn3 AT %Q* : BOOL;
+	bLed_Gn4 AT %Q* : BOOL;
+	
+	//Buttons
+	bButton1 AT %I* : BOOL;
+    bButton2 AT %I* : BOOL;
+    bButton3 AT %I* : BOOL;
+    bButton4 AT %I* : BOOL;
+	bButton5 AT %I* : BOOL;
+    bButton6 AT %I* : BOOL;
+	
+	bSetBTN : BOOL;
+	
+	//Sliders
+	slider1 : INT;
+	slider2 : INT;
+	slider3 : INT;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
