@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="MAIN" Id="{bbc69c0b-e531-4931-84b2-d188ceecb4a1}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
@@ -68,19 +68,19 @@ mc_power(Axis := Axis_x );
 ExecuteABS := BTN_LEFT;
 fbMoveAbs1(
     Axis        := Axis_x, 
-    Execute     := BTN_LEFT, 
-    Position    := 3000, 
+    Execute     := BTN_LEFT OR GVL.bButton1, 
+    Position    := gvl.slider1, 
     Velocity    := 50, 
 
     );
-	
+(*	
 fbMoveAbs2(
     Axis        := Axis_x, 
-    Execute     := BTN_RIGHT, 
+    Execute     := BTN_RIGHT OR gvl.bButton2, 
     Position    := -3000, 
     Velocity    := 50, 
 
-    );
+    );*)
 Halt_X1(
 	Axis:= Axis_x, 
 	Execute:= SWX1, 
@@ -91,7 +91,14 @@ Halt_X2(
 	Execute:= SWX2, 
 	 );
 	 
-]]></ST>
+GVL.bLed_Gn1 := Axis_x.Status.ControlLoopClosed;
+gvl.bLed_Rd1 := Axis_x.Status.Error;
+GVL.bLed_Gn2 := Axis_y1.Status.ControlLoopClosed;
+gvl.bLed_Rd2 := Axis_y1.Status.Error;
+GVL.bLed_Gn3 := Axis_y2.Status.ControlLoopClosed;
+gvl.bLed_Rd3 := Axis_y2.Status.Error;
+//GVL.bLed_Gn4 := Axis_x.Status.ControlLoopClosed;
+//gvl.bLed_Rd4 := Axis_x.Status.Error;]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="93" Count="20" />
@@ -106,6 +113,13 @@ Halt_X2(
       <LineId Id="156" Count="0" />
       <LineId Id="152" Count="0" />
       <LineId Id="115" Count="0" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="161" Count="0" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="165" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
