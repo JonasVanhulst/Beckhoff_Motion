@@ -4,7 +4,18 @@
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 
+	START : BOOL := FALSE;
+
     // input
+	bJogF	: BOOL := FALSE;
+	bJogB	: BOOL := FALSE;
+	bSet 	: BOOL := FALSE;
+	bToggle : BOOL := FALSE;
+	nValue AT %I*: LREAL;
+    nPotentiometer AT %I*: INT;
+    nDisplay AT %Q*: INT;
+	
+	
     ExecuteABS        : BOOL;
     Enable          : BOOL := TRUE;
     Enable_Positive : BOOL := TRUE;
@@ -15,6 +26,9 @@ VAR
     BTN_RIGHT       AT %I* : BOOL := FALSE;
     BTN_LEFT        AT %I* : BOOL := FALSE;
 
+	BTN_RIGHT_B		AT %I* : BOOL := FALSE;
+	BTN_LEFT_B		AT %I* : BOOL := FALSE;
+	
     SWY1  AT %I* : BOOL;
     SWY2  AT %I* : BOOL;
     SWX1  AT %I* : BOOL;
@@ -29,97 +43,282 @@ VAR
 
 
 
-
+	
 
 
 
     Axis_x : AXIS_REF;
+	Axis_z : AXIS_REF;
 	
 	Axis_y1 : AXIS_REF;
 	Axis_y2 : AXIS_REF;
+	
+	
 
     mc_power : MC_Power;
+	mc_powerZ : MC_Power;
+	mc_powerY1: MC_Power;
+	mc_powerY2: MC_Power;
 
-
-    fbMoveAbs1: MC_MoveAbsolute;
-    fbMoveAbs2: MC_MoveAbsolute;
+    fbMoveAbsX1: MC_MoveAbsolute;
+    fbMoveAbsX2: MC_MoveAbsolute;
+	fbMoveAbsY1: MC_MoveAbsolute;
+    fbMoveAbsY2: MC_MoveAbsolute;
+	fbMoveAbsZ1: MC_MoveAbsolute;
+    fbMoveAbsZ2: MC_MoveAbsolute;
 	
 
 	Axis_x_Halt: MC_Halt;
 	Halt_X1: MC_Halt;
 	Halt_X2: MC_Halt;
+	
+	Axis_y_Halt: MC_Halt;
+	Halt_Y1: MC_Halt;
+	Halt_Y2: MC_Halt;
+	
+	Axis_z_Halt: MC_Halt;
+	Halt_Z1: MC_Halt;
+	Halt_Z2: MC_Halt;
+	
+	
+	Couple_Y1_Y2: MC_GearInDyn;
+	fb_Jog_Z: MC_Jog;
+	fb_Jog_X: MC_Jog;
+	fb_Jog_Y: MC_Jog;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[mc_power.Enable := Enable;
-
+mc_powerZ.Enable := Enable;
+mc_powerY1.Enable:= Enable;
+mc_powerY2.Enable:= Enable;
 
 mc_power.Enable_Positive := Enable_Positive;
 mc_power.Enable_Negative := Enable_Negative;
 mc_power.Override := Override;
 
-//mc_power.BufferMode :=  MC_Buffered;
+mc_powerZ.Enable_Positive := Enable_Positive;
+mc_powerZ.Enable_Negative := Enable_Negative;
+mc_powerZ.Override := Override;
+
+mc_powerY1.Enable_Positive := Enable_Positive;
+mc_powerY1.Enable_Negative := Enable_Negative;
+mc_powerY1.Override := Override;
+
+mc_powerY2.Enable_Positive := Enable_Positive;
+mc_powerY2.Enable_Negative := Enable_Negative;
+mc_powerY2.Override := Override;
+
 mc_power(Axis := Axis_x );
+mc_powerZ(Axis := Axis_z );
+mc_powerY1(Axis := Axis_y1 );
+mc_powerY2(Axis := Axis_y2 );
 
-//mc_power.Axis.PlcToNc.ExtSetVelo := 100;
-//mc_power.Axis.PlcToNc.ExtSetPos := 1000000;
+
+Couple_Y1_Y2(
+	Master:= Axis_y1, 
+	Slave:= Axis_y2, 
+	Enable:= TRUE, 
+	GearRatio:= 1, 
+	Acceleration:= , 
+	Deceleration:= , 
+	Jerk:= , 
+	BufferMode:= , 
+	Options:= , 
+	InGear=> , 
+	Busy=> , 
+	Active=> , 
+	CommandAborted=> , 
+	Error=> , 
+	ErrorID=> );
+
+fbMoveAbsX1(
+	Axis        := Axis_x, 
+	Execute     := (START OR gvl.bHome) AND NOT SWX1, 
+	Position    := gvl.slider1, 
+	Velocity    := 50, 
+
+);
 
 
-ExecuteABS := BTN_LEFT;
-fbMoveAbs1(
-    Axis        := Axis_x, 
-    Execute     := BTN_LEFT OR GVL.bButton1, 
-    Position    := gvl.slider1, 
-    Velocity    := 50, 
+	
+//fbMoveAbsX2(
+//    Axis        := Axis_x, 
+//    Execute     := BTN_RIGHT AND NOT SWX2, 
+//    Position    := -3000, 
+//    Velocity    := 50, 
 
-    );
-(*	
-fbMoveAbs2(
-    Axis        := Axis_x, 
-    Execute     := BTN_RIGHT OR gvl.bButton2, 
-    Position    := -3000, 
-    Velocity    := 50, 
-
-    );*)
+//    );
 Halt_X1(
 	Axis:= Axis_x, 
 	Execute:= SWX1, 
 	 );
 	 
-Halt_X2(
-	Axis:= Axis_x, 
-	Execute:= SWX2, 
-	 );
+//Halt_X2(
+//	Axis:= Axis_x, 
+//	Execute:= SWX2, 
+//	 );
 	 
+
+//fbMoveAbsY1(
+//    Axis        := Axis_y1, 
+//    Execute     := BTN_LEFT_B AND NOT SWY1, 
+//    Position    := 3000, 
+//    Velocity    := 50, 
+
+//    );
+	
+fbMoveAbsY2(
+    Axis        := Axis_y1, 
+    Execute     := (START OR gvl.bHome) AND NOT SWY2, 
+    Position    := gvl.slider2, 
+    Velocity    := 50, 
+
+    );
+//Halt_Y1(
+//	Axis:= Axis_y1, 
+//	Execute:= SWY1, 
+//	 );
+	 
+Halt_Y2(
+	Axis:= Axis_y1, 
+	Execute:= SWY2, 
+	 );
+
+nValue := TO_INT (nPotentiometer*1000/32767);
+IF(nValue < 100 ) THEN
+	bJogF := TRUE;
+	bJogB := FALSE;
+ELSIF(nValue > 300) THEN
+	bJogB := TRUE;
+	bJogF := FALSE;
+ELSE
+	bJogB := FALSE;
+	bJogF := FALSE;
+END_IF
+
+	 
+fb_Jog_Z(
+	Axis:= Axis_z, 
+	JogForward:= bJogF OR gvl.bButton6, 
+	JogBackwards:= bJogB OR gvl.bButton5, 
+	Mode:= , 
+	Position:= , 
+	Velocity:= 50, 
+	Acceleration:= , 
+	Deceleration:= , 
+	Jerk:= , 
+	Done=> , 
+	Busy=> , 
+	Active=> , 
+	CommandAborted=> , 
+	Error=> , 
+	ErrorID=> );
+
+fb_Jog_y(
+	Axis:= Axis_y1, 
+	JogForward:= (BTN_RIGHT_B OR gvl.bButton4) AND NOT SWY1, 
+	JogBackwards:= (BTN_LEFT_B OR gvl.bButton3) AND NOT SWY2, 
+	Mode:= , 
+	Position:= , 
+	Velocity:= 50, 
+	Acceleration:= , 
+	Deceleration:= , 
+	Jerk:= , 
+	Done=> , 
+	Busy=> , 
+	Active=> , 
+	CommandAborted=> , 
+	Error=> , 
+	ErrorID=> );
+	
+fb_Jog_X(
+	Axis:= Axis_x, 
+	JogForward:= (BTN_RIGHT OR gvl.bButton2) AND NOT SWX1, 
+	JogBackwards:= (BTN_LEFT OR gvl.bButton1) AND NOT SWX2, 
+	Mode:= , 
+	Position:= , 
+	Velocity:= 50, 
+	Acceleration:= , 
+	Deceleration:= , 
+	Jerk:= , 
+	Done=> , 
+	Busy=> , 
+	Active=> , 
+	CommandAborted=> , 
+	Error=> , 
+	ErrorID=> );
+	
 GVL.bLed_Gn1 := Axis_x.Status.ControlLoopClosed;
 gvl.bLed_Rd1 := Axis_x.Status.Error;
 GVL.bLed_Gn2 := Axis_y1.Status.ControlLoopClosed;
 gvl.bLed_Rd2 := Axis_y1.Status.Error;
 GVL.bLed_Gn3 := Axis_y2.Status.ControlLoopClosed;
 gvl.bLed_Rd3 := Axis_y2.Status.Error;
-//GVL.bLed_Gn4 := Axis_x.Status.ControlLoopClosed;
-//gvl.bLed_Rd4 := Axis_x.Status.Error;]]></ST>
+GVL.bLed_Gn4 := Axis_z.Status.ControlLoopClosed;
+gvl.bLed_Rd4 := Axis_z.Status.Error;
+	 
+	 ]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="93" Count="20" />
-      <LineId Id="2" Count="0" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="256" Count="0" />
+      <LineId Id="241" Count="0" />
+      <LineId Id="94" Count="4" />
+      <LineId Id="258" Count="2" />
+      <LineId Id="257" Count="0" />
+      <LineId Id="161" Count="2" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="240" Count="0" />
+      <LineId Id="193" Count="1" />
+      <LineId Id="192" Count="0" />
+      <LineId Id="100" Count="1" />
+      <LineId Id="261" Count="0" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="196" Count="0" />
+      <LineId Id="217" Count="0" />
+      <LineId Id="219" Count="0" />
+      <LineId Id="225" Count="14" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="244" Count="2" />
+      <LineId Id="365" Count="0" />
+      <LineId Id="248" Count="1" />
+      <LineId Id="242" Count="0" />
+      <LineId Id="370" Count="8" />
       <LineId Id="144" Count="0" />
-      <LineId Id="146" Count="5" />
-      <LineId Id="145" Count="0" />
       <LineId Id="132" Count="2" />
       <LineId Id="114" Count="0" />
+      <LineId Id="366" Count="3" />
       <LineId Id="154" Count="0" />
-      <LineId Id="157" Count="2" />
-      <LineId Id="156" Count="0" />
       <LineId Id="152" Count="0" />
-      <LineId Id="115" Count="0" />
-      <LineId Id="160" Count="0" />
-      <LineId Id="162" Count="0" />
-      <LineId Id="161" Count="0" />
-      <LineId Id="164" Count="0" />
-      <LineId Id="163" Count="0" />
-      <LineId Id="166" Count="0" />
+      <LineId Id="168" Count="23" />
       <LineId Id="165" Count="0" />
+      <LineId Id="262" Count="0" />
+      <LineId Id="309" Count="0" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="354" Count="0" />
+      <LineId Id="358" Count="0" />
+      <LineId Id="356" Count="0" />
+      <LineId Id="359" Count="1" />
+      <LineId Id="362" Count="2" />
+      <LineId Id="355" Count="0" />
+      <LineId Id="361" Count="0" />
+      <LineId Id="263" Count="0" />
+      <LineId Id="339" Count="14" />
+      <LineId Id="285" Count="0" />
+      <LineId Id="379" Count="15" />
+      <LineId Id="265" Count="0" />
+      <LineId Id="395" Count="0" />
+      <LineId Id="397" Count="14" />
+      <LineId Id="396" Count="0" />
+      <LineId Id="412" Count="0" />
+      <LineId Id="414" Count="4" />
+      <LineId Id="413" Count="0" />
+      <LineId Id="420" Count="0" />
+      <LineId Id="419" Count="0" />
+      <LineId Id="266" Count="1" />
     </LineIds>
   </POU>
 </TcPlcObject>

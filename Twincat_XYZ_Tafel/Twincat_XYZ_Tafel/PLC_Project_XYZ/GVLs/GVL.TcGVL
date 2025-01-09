@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
-  <GVL Name="GVL" Id="{35e23919-0452-492b-b861-dd88e028caf2}">
+  <GVL Name="GVL" Id="{448d39f8-648e-485a-8da1-4f9a275f6af1}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
 	//Leds
@@ -15,14 +15,13 @@ VAR_GLOBAL
 	bLed_Gn4 AT %Q* : BOOL;
 	
 	//Buttons
-	bButton1 AT %I* : BOOL;
-    bButton2 AT %I* : BOOL;
-    bButton3 AT %I* : BOOL;
-    bButton4 AT %I* : BOOL;
-	bButton5 AT %I* : BOOL;
-    bButton6 AT %I* : BOOL;
-	
-	bSetBTN : BOOL;
+	bButton1 	AT %I* : BOOL;
+    bButton2 	AT %I* : BOOL;
+    bButton3 	AT %I* : BOOL;
+    bButton4 	AT %I* : BOOL;
+	bButton5 	AT %I* : BOOL;
+    bButton6 	AT %I* : BOOL;
+	bHome 		AT %I* : BOOL;
 	
 	//Sliders
 	slider1 : INT;

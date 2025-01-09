@@ -1,40 +1,80 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
-  <GlobalTextList Name="GlobalTextList" Id="{6cc0c289-bc83-47c2-846a-d5c9bd0868d2}">
+  <GlobalTextList Name="GlobalTextList" Id="{48c4a247-529f-4b9b-b57e-26653c9ba13d}">
     <XmlArchive>
       <Data>
         <o xml:space="preserve" t="GlobalTextListObject">
           <l n="TextList" t="ArrayList" cet="TextListRow">
             <o>
-              <v n="TextID">"479"</v>
-              <v n="TextDefault">"X-as"</v>
+              <v n="TextID">"237"</v>
+              <v n="TextDefault">"+"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"402"</v>
-              <v n="TextDefault">"Y-as"</v>
+              <v n="TextID">"569"</v>
+              <v n="TextDefault">"-"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"273"</v>
-              <v n="TextDefault">"Y1-as"</v>
+              <v n="TextID">"720"</v>
+              <v n="TextDefault">"Axes Status"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"368"</v>
-              <v n="TextDefault">"Y2-as"</v>
+              <v n="TextID">"276"</v>
+              <v n="TextDefault">"Button 1"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"565"</v>
-              <v n="TextDefault">"Z-as"</v>
+              <v n="TextID">"310"</v>
+              <v n="TextDefault">"Control Panel"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"422"</v>
+              <v n="TextDefault">"Home Panel"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"355"</v>
+              <v n="TextDefault">"X Axes"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"817"</v>
+              <v n="TextDefault">"X Axis"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"545"</v>
+              <v n="TextDefault">"Y Axes"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"114"</v>
+              <v n="TextDefault">"Y1 Axis"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"398"</v>
+              <v n="TextDefault">"Y2 Axis"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"842"</v>
+              <v n="TextDefault">"Z Axes"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"294"</v>
+              <v n="TextDefault">"Z Axis"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
           </l>
           <l n="Languages" t="ArrayList" />
-          <v n="GuidInit">{1142928c-97b2-4439-af7a-75c8c8a92f35}</v>
-          <v n="GuidReInit">{6673ab7b-27a2-4f27-970c-4bda508199e3}</v>
-          <v n="GuidExitX">{b1203aac-a21f-4d01-bb00-58d70f0e9580}</v>
+          <v n="GuidInit">{c4f2a883-9c21-418c-970f-a5492cf77633}</v>
+          <v n="GuidReInit">{bae3c479-3ad3-4ece-94c7-e944fad0b0d0}</v>
+          <v n="GuidExitX">{60379a47-4272-481f-9be5-7362547de49f}</v>
         </o>
       </Data>
       <TypeList>
