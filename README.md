@@ -59,7 +59,7 @@ Dries Nuttin - Dries.Nuttin@student.pxl.be
 
 Xander Aerts - Xander.Aerts@student.pxl.be
 
-Philippe-Arnaud Hiroux - Philippe.Arnaud.Hiroux@student.pxl.be
+Philippe-Arnaud Hiroux - Philippearnaud.Hiroux@student.pxl.be
 
 Jonas Vanhulst - Jonas.Vanhulst@student.pxl.be
 
